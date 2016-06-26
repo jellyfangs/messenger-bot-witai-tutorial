@@ -1,7 +1,7 @@
 'use strict'
 
 var Config = require('./config')
-var Wit = require('./wit')
+var wit = require('./wit').getWit()
 
 var processMsg = function (message) {
   // GET THE CONTENT
