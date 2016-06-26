@@ -4,8 +4,10 @@ var express = require('express')
 var bodyParser = require('body-parser')
 var request = require('request')
 
-var FB = require('./facebook');
 var Config = require('./config')
+var FB = require('./facebook')
+var Bot = require('./bot')
+
 
 // LETS MAKE A SERVER!
 var app = express()
@@ -34,25 +36,21 @@ app.get('/webhooks', function (req, res) {
 // to send messages to facebook
 app.post('/webhooks', function (req, res) {
   var entry = FB.getMessageEntry(req.body)
+
   // IS THE ENTRY A VALID MESSAGE?
   if (entry && entry.message) {
     // GET THE SENDER
     var sender = entry.sender.id
     console.log("Sender", sender)
 
-    // GET THE CONTENT
-    var msg = entry.message.text
-    console.log("Message", msg)
+    // SEND MESSAGE TO BOT FOR PROCESSING
+    var processedMsg = Bot.processMsg(entry.message)
 
-    // GET THE ATTACHMENT
-    var att = entry.message.attachments
-    console.log("Attachment", att)
-
-    // ECHO MESSAGE BACK
-    if (msg) {
+    // SEND MESSAGE BACK TO FACEBOOK
+    if (processedMsg) {
       FB.newMessage(
         sender,
-        msg
+        processedMsg
       )
     }
   }
