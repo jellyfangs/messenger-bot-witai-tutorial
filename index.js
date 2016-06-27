@@ -43,14 +43,17 @@ app.post('/webhooks', function (req, res) {
     var sender = entry.sender.id
     console.log("Sender", sender)
 
+    // GET THE SESSION
+    var sessionId = Bot.findOrCreateSession(sender)
+
     // SEND MESSAGE TO BOT FOR PROCESSING
-    var processedMsg = Bot.processMsg(entry.message)
+    var processedMsg = Bot.processMsg(entry.message, sessionId)
 
     // SEND MESSAGE BACK TO FACEBOOK
     if (processedMsg) {
       FB.newMessage(
         sender,
-        processedMsg
+        processedMsg.msg
       )
     }
   }
