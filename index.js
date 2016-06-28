@@ -39,17 +39,12 @@ app.post('/webhooks', function (req, res) {
 
   // IS THE ENTRY A VALID MESSAGE?
   if (entry && entry.message) {
-    console.log(entry.message)
+    console.log(entry)
     if (entry.message.attachments) {
-      console.log('no attachments')
-      // NO SMART ENOUGH FOR ATTACHMENTS YET
-      // Maybe a Bot.processAtts() function in the future
-      FB.newMessage(entry.sender.id, 'That is cool but I am do not understand attachments yet')
+      // NOT SMART ENOUGH FOR ATTACHMENTS YET
+      FB.newMessage(entry.sender.id, "That's interesting!")
     } else {
-      // SEND MESSAGE TO BOT FOR PROCESSING
-      Bot.processMsg(entry.sender.id, entry.message.text, function (sender, msg) {
-        FB.newMessage(sender, msg)
-      })
+      FB.newMessage(entry.sender.id, entry.message.text)
     }
   }
 

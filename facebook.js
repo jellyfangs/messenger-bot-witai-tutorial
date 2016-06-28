@@ -17,43 +17,60 @@ var newRequest = request.defaults({
 })
 
 // SETUP A MESSAGE FOR THE FACEBOOK REQUEST
-var newMessage = function (recipientId, msg, attachment, cb) {
+var newMessage = function (recipientId, msg, atts, cb) {
 	var opts = {
 		form: {
 			recipient: {
-				id: recipientId,
-			}
+				id: recipientId
+			},
 		}
 	}
 
-	if (attachment) {
-		opts.message = {
-			text: msg
+	// https://developers.facebook.com/docs/messenger-platform/send-api-reference
+
+	// FOR IMAGES
+	// "message":{
+	//    "attachment":{
+	//      "type":"image",
+	//      "payload":{
+	//        "url":"https://petersapparel.com/img/shirt.png"
+	//      }
+	//    }
+	//  }
+
+	// FOR TEMPLATES
+	// "message":{
+	//   "attachment":{
+	//     "type":"template",
+	//     "payload":{
+	//       "template_type":"button",
+	//       "text":"What do you want to do next?",
+	//       "buttons":[
+	//         {
+	//           "type":"web_url",
+	//           "url":"https://petersapparel.parseapp.com",
+	//           "title":"Show Website"
+	//         },
+	//         {
+	//           "type":"postback",
+	//           "title":"Start Chatting",
+	//           "payload":"USER_DEFINED_PAYLOAD"
+	//         }
+	//       ]
+	//     }
+	//   }
+	// }
+
+	if (atts) {
+		var message = {
+			attachment: atts
 		}
 	} else {
-		opts.message = {
+		var message = {
 			text: msg
 		}
 	}
-
-	newRequest(opts, function (err, resp, data) {
-		if (cb) {
-			cb(err || data.error && data.error.message, data)
-		}
-	})
-}
-
-var newAttachment = function (recipientId, msg, cb) {
-	var opts = {
-		form: {
-			recipient: {
-				id: recipientId,
-			},
-			message: {
-				text: msg
-			}
-		}
-	}
+	opts.form.message = message
 
 	newRequest(opts, function (err, resp, data) {
 		if (cb) {
