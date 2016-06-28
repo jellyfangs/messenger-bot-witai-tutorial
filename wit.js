@@ -5,8 +5,21 @@ var FB = require('./facebook')
 var Wit = require('node-wit').Wit
 var request = require('request')
 
-// Weather Example
-// See https://wit.ai/jw84/weather/stories and https://wit.ai/docs/quickstart
+
+const allPics = {
+  corgis: [
+    'Chuck Norris counted to infinity - twice.',
+    'Death once had a near-Chuck Norris experience.',
+  ],
+  cats: [
+    'Did you hear about the two antennas that got married? The ceremony was long and boring, but the reception was great!',
+    'Why do geeks mistake Halloween and Christmas? Because Oct 31 === Dec 25.',
+  ],
+  default: [
+    'Why was the Math book sad? Because it had so many problems.',
+  ],
+};
+
 
 var firstEntityValue = function (entities, entity) {
 	var val = entities && entities[entity] &&
@@ -36,12 +49,7 @@ var actions = {
 		if (recipientId) {
 			FB.newMessage(recipientId, message, function (err, data) {
 				if (err) {
-					console.log(
-						'Oops! An error occured while forwarding the response to',
-						recipientId,
-						':',
-						err
-					)
+					console.log('Oops! An error occured while forwarding the response to', recipientId, ':', err)
 				}
 				// Give back control
 				cb()
@@ -54,10 +62,30 @@ var actions = {
 	},
 
 	merge(sessionId, context, entities, message, cb) {
+		// Reset the weather story
+		delete context.forecast
+
 		// Retrive the location entity and store it in the context field
 		var loc = firstEntityValue(entities, 'location')
 		if (loc) {
 			context.loc = loc
+		}
+
+		// Reset the cutepics story
+		delete context.pics
+
+		// Retrieve the category
+		var category = firstEntityValue(entities, 'category')
+		if (category) {
+			context.cat = category
+		}
+
+		// Retrieve the sentiment
+		var sentiment = firstEntityValue(entities, 'sentiment')
+		if (sentiment) {
+			context.ack = sentiment === 'positive' ? 'Glad your liked it!' : 'Aww, that sucks.'
+		} else {
+			delete context.ack
 		}
 
 		cb(context)
@@ -84,10 +112,16 @@ var actions = {
 		// 		})
 		// }
 
-		context.forecast = 'sunny'
+		context.forecast = 'Sunny'
 
 		cb(context)
-	}
+	},
+
+	['fetch-pics'](sessionId, context, cb) {
+		var pics = allPics[context.cat || 'default']
+		context.pics = pics[Math.floor(Math.random() * pics.length)]
+		cb(context)
+	},
 }
 
 // SETUP THE WIT.AI SERVICE
