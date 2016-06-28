@@ -35,25 +35,20 @@ var firstEntityValue = function (entities, entity) {
 
 var actions = {
 	say (sessionId, context, message, cb) {
-		console.log('WIT SAYS', message)
-
 		// Bot testing mode, run cb() and return
 		if (require.main === module) {
 			cb()
 			return
 		}
 
-		// Our bot has something to say!
+		console.log('WIT HAS SOMETHING TO SAYS', message)
+
 		var recipientId = context._fbid_
 		console.log('WIT WANTS TO TALK TO', recipientId)
+
 		if (recipientId) {
-			FB.newMessage(recipientId, message, function (err, data) {
-				if (err) {
-					console.log('Oops! An error occured while forwarding the response to', recipientId, ':', err)
-				}
-				// Give back control
-				cb()
-			})
+			FB.newMessage(recipientId, message)
+			cb()
 		} else {
 			console.log('Oops! Did not find the user in context: ', context)
 			// Give back control
