@@ -17,7 +17,33 @@ var newRequest = request.defaults({
 })
 
 // SETUP A MESSAGE FOR THE FACEBOOK REQUEST
-var newMessage = function (recipientId, msg, cb) {
+var newMessage = function (recipientId, msg, attachment, cb) {
+	var opts = {
+		form: {
+			recipient: {
+				id: recipientId,
+			}
+		}
+	}
+
+	if (attachment) {
+		opts.message = {
+			text: msg
+		}
+	} else {
+		opts.message = {
+			text: msg
+		}
+	}
+
+	newRequest(opts, function (err, resp, data) {
+		if (cb) {
+			cb(err || data.error && data.error.message, data)
+		}
+	})
+}
+
+var newAttachment = function (recipientId, msg, cb) {
 	var opts = {
 		form: {
 			recipient: {
@@ -29,7 +55,7 @@ var newMessage = function (recipientId, msg, cb) {
 		}
 	}
 
-	newRequest(opts, (err, resp, data) => {
+	newRequest(opts, function (err, resp, data) {
 		if (cb) {
 			cb(err || data.error && data.error.message, data)
 		}

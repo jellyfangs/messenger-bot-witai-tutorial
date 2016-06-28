@@ -8,15 +8,15 @@ var request = require('request')
 
 const allPics = {
   corgis: [
-    'Chuck Norris counted to infinity - twice.',
-    'Death once had a near-Chuck Norris experience.',
+    'https://pbs.twimg.com/profile_images/378800000674268962/06ce58cab26c3a0daf80cf57e5acb29b_400x400.jpeg',
+    'https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s306x306/e15/10899304_1426072301036564_994441959_n.jpg',
   ],
-  cats: [
-    'Did you hear about the two antennas that got married? The ceremony was long and boring, but the reception was great!',
-    'Why do geeks mistake Halloween and Christmas? Because Oct 31 === Dec 25.',
+  racoons: [
+    'https://s-media-cache-ak0.pinimg.com/236x/d7/38/29/d7382942c4a16acc97e0b2d6ebc377ce.jpg',
+    'http://justcuteanimals.com/wp-content/uploads/2014/03/cute-animal-pictures-curious-baby-raccoon.jpg',
   ],
   default: [
-    'Why was the Math book sad? Because it had so many problems.',
+    'http://blog.uprinting.com/wp-content/uploads/2011/09/Cute-Baby-Pictures-29.jpg',
   ],
 };
 
@@ -120,9 +120,12 @@ var actions = {
 	['fetch-pics'](sessionId, context, cb) {
 		var pics = allPics[context.cat || 'default']
 		context.pics = pics[Math.floor(Math.random() * pics.length)]
+
 		cb(context)
 	},
 }
+
+
 
 // SETUP THE WIT.AI SERVICE
 var getWit = function () {

@@ -39,22 +39,17 @@ app.post('/webhooks', function (req, res) {
 
   // IS THE ENTRY A VALID MESSAGE?
   if (entry && entry.message) {
-    // GET THE SENDER
-    var sender = entry.sender.id
-    console.log("Sender", sender)
-
-    // GET THE SESSION
-    var sessionId = Bot.findOrCreateSession(sender)
-
-    // SEND MESSAGE TO BOT FOR PROCESSING
-    var processedMsg = Bot.processMsg(entry.message, sessionId)
-
-    // SEND MESSAGE BACK TO FACEBOOK
-    if (processedMsg) {
-      FB.newMessage(
-        sender,
-        processedMsg.msg
-      )
+    console.log(entry.message)
+    if (entry.message.attachments) {
+      console.log('no attachments')
+      // NO SMART ENOUGH FOR ATTACHMENTS YET
+      // Maybe a Bot.processAtts() function in the future
+      FB.newMessage(entry.sender.id, 'That is cool but I am do not understand attachments yet')
+    } else {
+      // SEND MESSAGE TO BOT FOR PROCESSING
+      Bot.processMsg(entry.sender.id, entry.message.text, function (sender, msg) {
+        FB.newMessage(sender, msg)
+      })
     }
   }
 

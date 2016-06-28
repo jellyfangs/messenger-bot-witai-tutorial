@@ -31,51 +31,48 @@ var findOrCreateSession = function (fbid) {
   return sessionId
 }
 
-var processMsg = function (message, sessionId) {
-  // GET THE MESSAGE
-  var msg = message.text
-  console.log("Haz message text? ", msg)
+var processMsg = function (sender, message, cb) {
+	// GET THE SESSION ID
+  console.log("Who iz sender?", sender)
 
-  // GET THE ATTACHMENT
-  var att = message.attachments
-  console.log("Haz attachment? ", att)
-
-  // GET THE SESSION ID
-  console.log("Haz session id? ", sessionId)
+  var session = findOrCreateSession(sender)
 
   // GET THE SESSION
-  console.log("Haz session? ", sessions[sessionId])
+  console.log("Haz session?", session)
+
+  // GET THE MESSAGE
+  console.log("Haz message text?", message)
+
+  // GET THE CB
+  console.log(cb)
+  cb(sender, 'hello')
 
   // LETS PROCESS THE MESSAGE
   // If Attachment then reply...
-	if (att) {
-		msg = 'That is cool but I am do not understand attachments yet'
-	} else {
-		// Forward to our NLP service to reply...
-		wit.runActions(sessionId, msg, sessions[sessionId].context, function (error, context) {
-			if (error) {
-				console.log('oops! got an error: ', error)
-			} else {
-				console.log('waiting for more messages')
-				console.log('context', context)
+	// if (atts) {
+	// 	cb('That is cool but I am do not understand attachments yet')
+	// } else if (msg) {
+	// 	// Forward to our NLP service to reply...
+	// 	wit.runActions(sessionId, msg, sessions[sessionId].context, function (error, context, cb) {
+	// 		if (error) {
+	// 			console.log('oops! got an error: ', error)
+	// 		} else {
+	// 			console.log('waiting for more messages')
+	// 			console.log('context', context)
 
-				if (context['stop']) {
-					delete sessions[sessionId]
-					return {
-						msg: 'Done!',
-						sessions: sessions
-					}
-				}
+	// 			if (context['done']) {
+	// 				delete sessions[sessionId]
+	// 			}
 
-				// update users current session state
-				sessions[sessionId].context = context
-			}
-		})
-	}
-	
-	// return {
-	// 	msg: msg, 
-	// 	sessions: sessions,
+	// 			// update users current session state
+	// 			sessions[sessionId].context = context
+
+	// 			// give back
+	// 			cb()
+	// 		}
+	// 	})
+	// } else {
+	// 	return 'Hmm...'
 	// }
 }
 
