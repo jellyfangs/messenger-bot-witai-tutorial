@@ -63,7 +63,12 @@ var newMessage = function (recipientId, msg, atts, cb) {
 
 	if (atts) {
 		var message = {
-			attachment: atts
+			attachment: {
+				"type": "image",
+				"payload": {
+					"url": msg
+				}
+			}
 		}
 	} else {
 		var message = {

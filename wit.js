@@ -41,19 +41,19 @@ var actions = {
 			return
 		}
 
-		console.log('WIT HAS SOMETHING TO SAYS', message)
+		console.log('WIT WANTS TO TALK TO:', context._fbid_)
+		console.log('WIT HAS SOMETHING TO SAY:', message)
+		console.log('WIT HAS A CONTEXT:', context)
 
-		var recipientId = context._fbid_
-		console.log('WIT WANTS TO TALK TO', recipientId)
-
-		if (recipientId) {
-			FB.newMessage(recipientId, message)
-			cb()
+		if (checkURL(message)) {
+			FB.newMessage(context._fbid_, message, true)
 		} else {
-			console.log('Oops! Did not find the user in context: ', context)
-			// Give back control
-			cb()
+			FB.newMessage(context._fbid_, message)
 		}
+
+		
+		cb()
+		
 	},
 
 	merge(sessionId, context, entities, message, cb) {
@@ -92,10 +92,6 @@ var actions = {
 
 	// list of functions Wit.ai can execute
 	['fetch-weather'](sessionId, context, cb) {
-		console.log('WIT IS RUNNING FETCH WEATHER')
-		console.log('Session ID', sessionId)
-		console.log('Context', context)
-
 		// Here we can place an API call to a weather service
 		// if (context.loc) {
 		// 	getWeather(context.loc)
@@ -113,8 +109,8 @@ var actions = {
 	},
 
 	['fetch-pics'](sessionId, context, cb) {
-		var pics = allPics[context.cat || 'default']
-		context.pics = pics[Math.floor(Math.random() * pics.length)]
+		var wantedPics = allPics[context.cat || 'default']
+		context.pics = wantedPics[Math.floor(Math.random() * wantedPics.length)]
 
 		cb(context)
 	},
@@ -152,4 +148,8 @@ var getWeather = function (location) {
 		    }
 			})
 	})
+}
+
+var checkURL = function (url) {
+    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
