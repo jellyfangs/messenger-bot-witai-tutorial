@@ -31,56 +31,10 @@ var findOrCreateSession = function (fbid) {
   return sessionId
 }
 
-var processMsg = function (sender, message, cb) {
-	// GET THE SESSION ID
-  console.log("Who iz sender?", sender)
-
-  var session = findOrCreateSession(sender)
-
-  // GET THE SESSION
-  console.log("Haz session?", session)
-
-  // GET THE MESSAGE
-  console.log("Haz message text?", message)
-
-  // GET THE CB
-  console.log(cb)
-  cb(sender, 'hello')
-
-  // LETS PROCESS THE MESSAGE
-  // If Attachment then reply...
-	// if (atts) {
-	// 	cb('That is cool but I am do not understand attachments yet')
-	// } else if (msg) {
-	// 	// Forward to our NLP service to reply...
-	// 	wit.runActions(sessionId, msg, sessions[sessionId].context, function (error, context, cb) {
-	// 		if (error) {
-	// 			console.log('oops! got an error: ', error)
-	// 		} else {
-	// 			console.log('waiting for more messages')
-	// 			console.log('context', context)
-
-	// 			if (context['done']) {
-	// 				delete sessions[sessionId]
-	// 			}
-
-	// 			// update users current session state
-	// 			sessions[sessionId].context = context
-
-	// 			// give back
-	// 			cb()
-	// 		}
-	// 	})
-	// } else {
-	// 	return 'Hmm...'
-	// }
-}
-
-
 var read = function (sender, message, reply) {
 	if (message === 'hello') {
 		// Let's reply back hello
-		message = 'Hello yourself! I am a cute pics chat bot. You can say "show me some pics" or even "say show pics of corgis". Be sure to let me know if they are cute or not!'
+		message = 'Hello yourself! I am a chat bot. You can say "show me pics of corgis"'
 		reply(sender, message)
 	} else {
 		// Let's find the user
@@ -115,7 +69,6 @@ var read = function (sender, message, reply) {
 
 
 module.exports = {
-	processMsg: processMsg,
 	findOrCreateSession: findOrCreateSession,
 	read: read,
 }
