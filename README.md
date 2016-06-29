@@ -35,13 +35,10 @@ Be sure you know how to deploy a Heroku server. You can then git clone this repo
 
 Let’s test first that the token works by running this command in your Terminal:
 
-	```
 	curl -H 'Authorization: Bearer <YOUR TOKEN HERE>' 'https://api.wit.ai/message?v=20141022&q=what%20is%20the%20weather%20in%20New%20York'
-	```
 
 You should get back a response like:
 
-	```
 	{
 	  "msg_id" : "14735f29-daa9-4553-a259-24cfa8c4ba42",
 	  "_text" : "what is the weather in New York",
@@ -58,7 +55,6 @@ You should get back a response like:
 	    }
 	  } ]
 	}
-	```
 
 Great success! ✨
 
@@ -101,7 +97,7 @@ Click Verify and Save. You should see the Complete sign!
 When that’s done you should be able to at least say hi to your chat bot and have it echo back hi! 🤖
 
 
-### Next we’re going to create stories
+### *Create stories in Wit.ai*
 
 Wit.ai does the hard work for you by creating a simple to use interface to manage what are called “stories” — these are ways to extract meaning from a keyword or sentence.
 
@@ -110,9 +106,9 @@ Wit.ai does the hard work for you by creating a simple to use interface to manag
 For now you might have to write a lot of stories for your chat bot to understand language but soon Wit.ai has a vision that we can share hundreds of stories with each other. And with more stories the more skills your chat bot will have.
 
 
-## Time to teach your bot!
+## 🎓 Time to teach your bot!
 
-### Extract location out of conversations
+### *Extract location out of conversations*
 
 1. Create a new story in the Wit dashboard. The first type of story we’ll write is extracting location from conversations. This way we can build a weather bot! Go here [https://wit.ai/jw84/weather/stories](https://wit.ai/jw84/weather/stories) to see the recipe I’ve created.
 
@@ -126,7 +122,7 @@ For now you might have to write a lot of stories for your chat bot to understand
 
 ![Alt text](/demo/Demo8.gif)
 
-### Extract category and sentiment out of conversations
+### *Extract category and sentiment out of conversations*
 
 1. Create yet another Wit app in the dashboard. This new app will have three stories to extract the category and sentiment entities out of a conversation so your chat bot can reply with some cute pics! Go here [https://wit.ai/jw84/cutepics/stories](https://wit.ai/jw84/cutepics/stories) to see the recipe
 
@@ -154,13 +150,13 @@ Let’s go back and chat it up. Ask to see some corgis. Then ask to see some rac
 
 Congratulations you’ve made a chat bot that’s smart enough to know what you’re talking about, what you mean, and reply back accordingly!
 
-## Tell Your Chat Bot What’s What
+## 🤓 Tell Your Chat Bot What’s What
 
 NLP and NLU are not magical! They are merely defining rules for your bot. Your chat bot will break sometimes and maybe even often when being told new and interesting conversations it’s never heard before.
 
 It is now up to you to help keep training and testing your bot until it’s the very best. You have two tools in Wit.ai to do so. Go to the console and let’s learn about the Inbox and the Understanding page.
 
-### Training your chat bot
+### *Training your chat bot*
 
 Wit.ai has an inbox that shows you all the messages it has received. From here you can pick and choose which one to validate and contribute to the training data of your chat bot.
 
@@ -170,7 +166,7 @@ For example, if you have an entity of location you can assign more values to hel
 
 The more people that talk to your chat bot and the more complex your bot is the more you will spend time in this page. And the work you do here will help make your bot even smarter.
 
-### Testing your chat bot
+### *Testing your chat bot*
 
 The other page you will be spending time at will be in the Understanding page. Here you can try out sentences yourself to test whether your chat bot can understand and to troubleshoot when a sentence doesn’t trigger the right response.
 
