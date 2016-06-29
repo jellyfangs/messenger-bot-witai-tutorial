@@ -6,21 +6,6 @@ var Wit = require('node-wit').Wit
 var request = require('request')
 
 
-const allPics = {
-  corgis: [
-    'https://pbs.twimg.com/profile_images/378800000674268962/06ce58cab26c3a0daf80cf57e5acb29b_400x400.jpeg',
-    'https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s306x306/e15/10899304_1426072301036564_994441959_n.jpg',
-  ],
-  racoons: [
-    'https://s-media-cache-ak0.pinimg.com/236x/d7/38/29/d7382942c4a16acc97e0b2d6ebc377ce.jpg',
-    'http://justcuteanimals.com/wp-content/uploads/2014/03/cute-animal-pictures-curious-baby-raccoon.jpg',
-  ],
-  default: [
-    'http://blog.uprinting.com/wp-content/uploads/2011/09/Cute-Baby-Pictures-29.jpg',
-  ],
-};
-
-
 var firstEntityValue = function (entities, entity) {
 	var val = entities && entities[entity] &&
 		Array.isArray(entities[entity]) &&
@@ -32,6 +17,7 @@ var firstEntityValue = function (entities, entity) {
 	}
 	return typeof val === 'object' ? val.value : val
 }
+
 
 var actions = {
 	say (sessionId, context, message, cb) {
@@ -116,8 +102,6 @@ var actions = {
 	},
 }
 
-
-
 // SETUP THE WIT.AI SERVICE
 var getWit = function () {
 	console.log('GRABBING WIT')
@@ -128,7 +112,7 @@ module.exports = {
 	getWit: getWit,
 }
 
-// bot testing mode
+// BOT TESTING MODE
 if (require.main === module) {
 	console.log('Bot testing mode!')
 	var client = getWit()
@@ -150,6 +134,34 @@ var getWeather = function (location) {
 	})
 }
 
+// CHECK IF URL IS AN IMAGE FILE
 var checkURL = function (url) {
     return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 }
+
+// LIST OF ALL PICS
+var allPics = {
+  corgis: [
+    'http://i.imgur.com/uYyICl0.jpeg',
+    'http://i.imgur.com/useIJl6.jpeg',
+    'http://i.imgur.com/LD242xr.jpeg',
+    'http://i.imgur.com/Q7vn2vS.jpeg',
+    'http://i.imgur.com/ZTmF9jm.jpeg',
+    'http://i.imgur.com/jJlWH6x.jpeg',
+		'http://i.imgur.com/ZYUakqg.jpeg',
+		'http://i.imgur.com/RxoU9o9.jpeg',
+  ],
+  racoons: [
+    'http://i.imgur.com/zCC3npm.jpeg',
+    'http://i.imgur.com/OvxavBY.jpeg',
+    'http://i.imgur.com/Z6oAGRu.jpeg',
+		'http://i.imgur.com/uAlg8Hl.jpeg',
+		'http://i.imgur.com/q0O0xYm.jpeg',
+		'http://i.imgur.com/BrhxR5a.jpeg',
+		'http://i.imgur.com/05hlAWU.jpeg',
+		'http://i.imgur.com/HAeMnSq.jpeg',
+  ],
+  default: [
+    'http://blog.uprinting.com/wp-content/uploads/2011/09/Cute-Baby-Pictures-29.jpg',
+  ],
+};

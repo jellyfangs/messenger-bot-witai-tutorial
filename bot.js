@@ -80,7 +80,7 @@ var processMsg = function (sender, message, cb) {
 var read = function (sender, message, reply) {
 	if (message === 'hello') {
 		// Let's reply back hello
-		message = 'hello yourself'
+		message = 'Hello yourself! I am a cute pics chat bot. You can say "show me some pics" or even "say show pics of corgis". Be sure to let me know if they are cute or not!'
 		reply(sender, message)
 	} else {
 		// Let's find the user
