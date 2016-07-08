@@ -27,7 +27,7 @@ Be sure you know how to deploy a Heroku server. You can then git clone this repo
 
 1. Sign up for a Wit.ai account here: https://wit.ai
 
-2. Go clone my weather app: [https://wit.ai/jw84/weather](https://wit.ai/jw84/weather) 
+2. Go clone my weather app: [https://wit.ai/jw84/weather](https://wit.ai/jw84/weather)
 
 3. Find the app token in your weather app so we can test everything is working. In your app go to the Settings page then find the “Server Access Token” in API Details.
 
@@ -35,25 +35,21 @@ Be sure you know how to deploy a Heroku server. You can then git clone this repo
 
 Let’s test first that the token works by running this command in your Terminal:
 
-	curl -H 'Authorization: Bearer <YOUR TOKEN HERE>' 'https://api.wit.ai/message?v=20141022&q=what%20is%20the%20weather%20in%20New%20York'
+	curl -H 'Authorization: Bearer <YOUR TOKEN HERE>' 'https://api.wit.ai/message?v=20160526&q=what%20is%20the%20weather%20in%20New%20York'
 
 You should get back a response like:
 
 	{
 	  "msg_id" : "14735f29-daa9-4553-a259-24cfa8c4ba42",
 	  "_text" : "what is the weather in New York",
-	  "outcomes" : [ {
-	    "_text" : "what is the weather in New York",
-	    "confidence" : null,
-	    "intent" : "default_intent",
-	    "entities" : {
-	      "location" : [ {
-	        "type" : "value",
-	        "value" : "New York",
-	        "suggested" : true
-	      } ]
-	    }
-	  } ]
+		"entities": {
+			"location": [ {
+				"confidence": 0.9984463453705885,
+				"type": "value",
+				"value": "New York",
+				"suggested": true
+			} ]
+		}
 	}
 
 Great success! ✨
